@@ -9,35 +9,35 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 
 import { Badge, host } from '../../components';
 
-import './List.scss';
+import './Сhapter.scss';
 
 library.add(fas);
 
-const List = ({ items, isRemovable, onClick, onRemove, onClickItem, activeItem }) => {
-	const removeList = list => {
-		const listName = list.name;
+const Chapter = ({ items, isRemovable, onClick, onRemove, onClickItem, activeItem }) => {
+	const removeChapter = chapter => {
+		const chapterName = chapter.name;
 
 		Swal.fire({
-			title: `Вы уверены что хотите удалить список "${ listName }"?`,
+			title: `Вы уверены что хотите удалить список "${ chapterName }"?`,
 			icon: 'question',
 			confirmButtonColor: '#42B883',
 			cancelButtonColor: '#C9D1D3',
 			confirmButtonText: 'Да, удалить!',
 			showCancelButton: true,
 			cancelButtonText: 'Отмена',
-			focusConfirm:false,
-			focusCancel:false,
+			focusConfirm: false,
+			focusCancel: false,
 		}).then(result => {
 			if (result.value) {
-				axios.delete(`http://${ host.ip }:${ host.port }/lists/${ list.id }`).then(() => {
-					onRemove(list.id);
+				axios.delete(`http://${ host.ip }:${ host.port }/chapters/${ chapter.id }`).then(() => {
+					onRemove(chapter.id);
 				}).then(() => {
-					console.debug(`Список '${ listName }' успешно удален`);
+					console.debug(`Список '${ chapterName }' успешно удален`);
 				}).catch(error => {
 					Swal.fire({
 						icon: 'error',
 						title: 'Не удалось удалить список'
-					}).finally(()=>{
+					}).finally(() => {
 						console.error('Не удалось удалить список');
 						console.error(`Ошибка: ${ error }`);
 					});
@@ -47,7 +47,7 @@ const List = ({ items, isRemovable, onClick, onRemove, onClickItem, activeItem }
 	};
 
 	return (
-		<ul className='list' onClick={ onClick }>
+		<ul className='chapter' onClick={ onClick }>
 			{ items.map((item, index) => (
 				<li key={ index }
 				    className={ classNames(item.className, {
@@ -63,13 +63,13 @@ const List = ({ items, isRemovable, onClick, onRemove, onClickItem, activeItem }
 					}
 					<span>
 						{ item.name }
-						{ item.tasks && ` (${ item.tasks.filter(task => task.completed).length }/${ item.tasks.length })` }
+						{ item.lessons && ` (${ item.lessons.filter(lesson => lesson.completed).length }/${ item.lessons.length })` }
 					</span>
 					{ isRemovable && (
-						<FontAwesomeIcon className={ 'list__remove-button' }
+						<FontAwesomeIcon className={ 'chapter__remove-button' }
 						                 icon={ 'times' }
 						                 color={ 'transparent' }
-						                 onClick={ () => removeList(item) }/>
+						                 onClick={ () => removeChapter(item) }/>
 					) }
 				</li>
 			)) }
@@ -77,4 +77,4 @@ const List = ({ items, isRemovable, onClick, onRemove, onClickItem, activeItem }
 	);
 };
 
-export default List;
+export default Chapter;

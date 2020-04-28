@@ -1,14 +1,14 @@
 @import 'src/variables';
 
-.add-list {
+.add-chapter {
   &__button {
-    color: $btn-add-list-color;
+    color: $btn-add-chapter-color;
 
     &:hover {
-      color: $btn-add-list-color--hover;
+      color: $btn-add-chapter-color--hover;
 
       .icon {
-        color: $btn-add-list-color--hover;
+        color: $btn-add-chapter-color--hover;
       }
     }
   }

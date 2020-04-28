@@ -1,6 +1,6 @@
 @import 'src/variables';
 
-.tasks {
+.lessons {
   display: flex;
   flex-direction: column;
 
@@ -10,7 +10,7 @@
     margin-top: 30px;
 
     &:hover {
-      .tasks__header__list-name-edit-button {
+      .lessons__header__chapter-name-edit-button {
         color: lighten($action-btn-color, 15%);
       }
     }
@@ -23,7 +23,7 @@
 
     }
 
-    &__list-name-edit-button {
+    &__chapter-name-edit-button {
       align-self: flex-end;
       font-size: 16pt;
       margin-left: 15px;
@@ -73,8 +73,8 @@
           &:hover {
             background-color: $action-btn-background-color--hover;
 
-            .tasks__items-row-actions__edit-button,
-            .tasks__items-row-actions__remove-button {
+            .lessons__items-row-actions__edit-button,
+            .lessons__items-row-actions__remove-button {
               color: $action-btn-color--hover;
             }
           }
@@ -98,7 +98,7 @@
       }
     }
 
-    .no-tasks {
+    .no-lessons {
       align-self: center;
       margin: 20vh 0;
       font-family: Montserrat, serif;
@@ -156,15 +156,15 @@
       width: max-content;
       align-items: center;
       cursor: pointer;
-      color: $btn-add-list-color;
+      color: $btn-add-chapter-color;
       margin-left: 5px;
       transition: opacity 0.15s ease-in-out;
 
       &:hover {
-        color: $btn-add-list-color--hover;
+        color: $btn-add-chapter-color--hover;
 
         .icon {
-          color: $btn-add-list-color--hover;
+          color: $btn-add-chapter-color--hover;
         }
       }
 

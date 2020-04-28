@@ -1,5 +1,5 @@
 {
-  "lists": [
+  "chapters": [
     {
       "id": 2,
       "name": "Фронтенд",
@@ -26,75 +26,75 @@
       "id": 7
     }
   ],
-  "tasks": [
+  "lessons": [
     {
       "id": 1,
-      "listId": 2,
+      "chapterId": 2,
       "text": "Изучить JavaScript",
       "completed": true
     },
     {
       "id": 2,
-      "listId": 2,
+      "chapterId": 2,
       "text": "Изучить паттерны проектирования",
       "completed": true
     },
     {
       "id": 3,
-      "listId": 2,
+      "chapterId": 2,
       "text": "ReactJS Hooks (useState, useReducer, useEffect и т.д.)",
       "completed": true
     },
     {
       "id": 4,
-      "listId": 2,
+      "chapterId": 2,
       "text": "Redux (redux-observable, redux-saga)",
       "completed": true
     },
     {
-      "listId": 4,
+      "chapterId": 4,
       "text": "Дочитать \"Чистый код\"",
       "completed": false,
       "id": 10
     },
     {
-      "listId": 7,
+      "chapterId": 7,
       "text": "Сделали сайдбар",
       "completed": true,
       "id": 15
     },
     {
-      "listId": 7,
+      "chapterId": 7,
       "text": "Сделали список задач",
       "completed": true,
       "id": 16
     },
     {
-      "listId": 7,
+      "chapterId": 7,
       "text": "Сделали удаление и редактирование задач и списков",
       "completed": true,
       "id": 17
     },
     {
-      "listId": 6,
+      "chapterId": 6,
       "text": "Делать с утра зарядку",
       "completed": true,
       "id": 18
     },
     {
-      "listId": 6,
+      "chapterId": 6,
       "text": "Присесть 150 раз за день",
       "completed": false,
       "id": 19
     },
     {
-      "listId": 3,
+      "chapterId": 3,
       "text": "Досмотреть Ходячих мертвецов",
       "completed": true,
       "id": 21
     },
     {
-      "listId": 3,
+      "chapterId": 3,
       "text": "Досмотреть 6 сезон",
       "completed": true,
       "id": 22

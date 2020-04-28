@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Route, useHistory } from 'react-router-dom';
@@ -7,19 +7,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
-import { List, AddListButton, Tasks, host } from './components';
+import { AddChapterButton, Chapter, host, Lessons } from './components';
 
 library.add(fas);
 
 function App() {
-	const [lists, updateLists] = useState(null);
+	const [chapters, updateChapters] = useState(null);
 	const [colors, setColors] = useState(null);
 	const [activeItem, setActiveItem] = useState(null);
 	let history = useHistory();
 
 	useEffect(() => {
-		axios.get(`http://${ host.ip }:${ host.port }/lists?_expand=color&_embed=tasks`).then(({ data }) => {
-			updateLists(data);
+		axios.get(`http://${ host.ip }:${ host.port }/chapters?_expand=color&_embed=lessons`).then(({ data }) => {
+			updateChapters(data);
 		}).then(() => {
 			console.debug(`Списки задач успешно получены с сервера`);
 		}).catch(error => {
@@ -39,35 +39,35 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		const listId = Number(history.location.pathname.replace('/lists/', ''));
-		if (lists) {
-			const list = lists.find(list => list.id === listId);
-			setActiveItem(list);
+		const chapterId = Number(history.location.pathname.replace('/chapters/', ''));
+		if (chapters) {
+			const chapter = chapters.find(chapter => chapter.id === chapterId);
+			setActiveItem(chapter);
 		}
-	}, [lists, history.location.pathname]);
+	}, [chapters, history.location.pathname]);
 
-	/* list events */
-	const onAddList = list => {
-		const newList = [...lists, list];
-		updateLists(newList);
+	/* chapter events */
+	const onAddChapter = chapter => {
+		const newChapter = [...chapters, chapter];
+		updateChapters(newChapter);
 	};
 
-	/* task events */
-	const onAddTask = (listId, newTask) => {
-		const newList = lists.map(item => {
-			if (item.id === listId) {
-				item.tasks = [...item.tasks, newTask];
+	/* lesson events */
+	const onAddLesson = (chapterId, newLesson) => {
+		const newChapter = chapters.map(item => {
+			if (item.id === chapterId) {
+				item.lessons = [...item.lessons, newLesson];
 			}
 			return item;
 		});
-		updateLists(newList);
+		updateChapters(newChapter);
 	};
 
-	const onEditTask = (listId, updTask) => {
+	const onEditLesson = (chapterId, updLesson) => {
 		Swal.fire({
 			title: 'Введите текст задачи',
 			input: 'text',
-			inputValue: updTask.text,
+			inputValue: updLesson.text,
 			showCancelButton: true,
 			cancelButtonText: 'Отмена',
 			confirmButtonColor: '#42B883',
@@ -79,22 +79,22 @@ function App() {
 			}
 		}).then(({ value, dismiss }) => {
 			if (value) {
-				return [lists.map(list => {
-					if (list.id === listId) {
-						list.tasks = list.tasks.map(task => {
-							if (task.id === updTask.id) {
-								task.text = value;
+				return [chapters.map(chapter => {
+					if (chapter.id === chapterId) {
+						chapter.lessons = chapter.lessons.map(lesson => {
+							if (lesson.id === updLesson.id) {
+								lesson.text = value;
 							}
-							return task;
+							return lesson;
 						});
 					}
-					return list;
+					return chapter;
 				}), value];
 			} else return [null, dismiss];
-		}).then(([list, value]) => {
-			if (list && value) {
-				updateLists(list);
-				axios.patch(`http://${ host.ip }:${ host.port }/tasks/${ updTask.id }`, {
+		}).then(([chapter, value]) => {
+			if (chapter && value) {
+				updateChapters(chapter);
+				axios.patch(`http://${ host.ip }:${ host.port }/lessons/${ updLesson.id }`, {
 					text: value
 				}).catch(error => {
 					Swal.fire({
@@ -109,21 +109,21 @@ function App() {
 		});
 	};
 
-	const onRemoveTask = (listId, taskId) => {
-		let taskName = '';
-		lists.forEach(list => {
-			if (list.id === listId) {
-				list.tasks = list.tasks.map(task => {
-					if (task.id === taskId) {
-						taskName = task.text;
+	const onRemoveLesson = (chapterId, lessonId) => {
+		let lessonName = '';
+		chapters.forEach(chapter => {
+			if (chapter.id === chapterId) {
+				chapter.lessons = chapter.lessons.map(lesson => {
+					if (lesson.id === lessonId) {
+						lessonName = lesson.text;
 					}
-					return task;
+					return lesson;
 				});
 			}
-			return list;
+			return chapter;
 		});
 		Swal.fire({
-			title: `Вы уверены что хотите удалить задачу\n"${ taskName }"?`,
+			title: `Вы уверены что хотите удалить задачу\n"${ lessonName }"?`,
 			icon: 'question',
 			confirmButtonColor: '#42B883',
 			cancelButtonColor: '#C9D1D3',
@@ -132,15 +132,15 @@ function App() {
 			cancelButtonText: 'Отмена'
 		}).then(result => {
 			if (result.value) {
-				const newList = lists.map(item => {
-					if (item.id === listId) {
-						item.tasks = item.tasks.filter(task => task.id !== taskId);
+				const newChapter = chapters.map(item => {
+					if (item.id === chapterId) {
+						item.lessons = item.lessons.filter(lesson => lesson.id !== lessonId);
 					}
 					return item;
 				});
-				updateLists(newList);
-				axios.delete(`http://${ host.ip }:${ host.port }/tasks/${ taskId }`).then(() => {
-					console.debug(`Задача '${ taskName }' успешно удалена`);
+				updateChapters(newChapter);
+				axios.delete(`http://${ host.ip }:${ host.port }/lessons/${ lessonId }`).then(() => {
+					console.debug(`Задача '${ lessonName }' успешно удалена`);
 				}).catch(error => {
 					Swal.fire({
 						icon: 'error',
@@ -154,20 +154,20 @@ function App() {
 		});
 	};
 
-	const onCompleteTask = (listId, taskId, completed) => {
-		const newList = lists.map(list => {
-			if (list.id === listId) {
-				list.tasks = list.tasks.map(task => {
-					if (task.id === taskId) {
-						task.completed = completed;
+	const onCompleteLesson = (chapterId, lessonId, completed) => {
+		const newChapter = chapters.map(chapter => {
+			if (chapter.id === chapterId) {
+				chapter.lessons = chapter.lessons.map(lesson => {
+					if (lesson.id === lessonId) {
+						lesson.completed = completed;
 					}
-					return task;
+					return lesson;
 				});
 			}
-			return list;
+			return chapter;
 		});
-		updateLists(newList);
-		axios.patch(`http://${ host.ip }:${ host.port }/tasks/${ taskId }`, {
+		updateChapters(newChapter);
+		axios.patch(`http://${ host.ip }:${ host.port }/lessons/${ lessonId }`, {
 			completed
 		}).catch(error => {
 			console.error('Не удалось обновить задачу');
@@ -176,38 +176,38 @@ function App() {
 		});
 	};
 
-	const onEditListTitle = (id, title) => {
-		const newList = lists.map(item => {
+	const onEditChapterTitle = (id, title) => {
+		const newChapter = chapters.map(item => {
 			if (item.id === id) {
 				item.name = title;
 			}
 			return item;
 		});
-		updateLists(newList);
+		updateChapters(newChapter);
 	};
 
 	return (
 		<div className='todo'>
 			<div className='todo__sidebar'>
-				<List onClickItem={ () => {
+				<Chapter onClickItem={ () => {
 					history.push(`/`);
 				} } items={ [{
 					active: history.location.pathname === '/',
 					icon: 'list',
 					name: 'Все задачи'
 				}] }/>
-				{ lists ? (
-					<List items={ lists }
-					      onRemove={ id => {
-						      const newLists = lists.filter(item => item.id !== id);
-						      setActiveItem(lists.find(item => item.id === id));
-						      updateLists(newLists);
-					      } }
-					      onClickItem={ list => {
-						      history.push(`/lists/${ list.id }`);
-					      } }
-					      activeItem={ activeItem }
-					      isRemovable/>
+				{ chapters ? (
+					<Chapter items={ chapters }
+					         onRemove={ id => {
+						         const newChapters = chapters.filter(item => item.id !== id);
+						         setActiveItem(chapters.find(item => item.id === id));
+						         updateChapters(newChapters);
+					         } }
+					         onClickItem={ chapter => {
+						         history.push(`/chapters/${ chapter.id }`);
+					         } }
+					         activeItem={ activeItem }
+					         isRemovable/>
 				) : (
 					<div className='loading'>
 						<FontAwesomeIcon className={ 'icon fa-spin' }
@@ -215,31 +215,31 @@ function App() {
 						<p>Загрузка...</p>
 					</div>
 				) }
-				<AddListButton colors={ colors }
-				               onAdd={ onAddList }/>
+				<AddChapterButton colors={ colors }
+				                  onAdd={ onAddChapter }/>
 			</div>
-			<div className='todo__tasks'>
+			<div className='todo__lessons'>
 				<Route exact path='/'>
-					{ lists && lists.map(list => (
-						<Tasks key={ list.id }
-						       list={ list }
-						       onAddTask={ onAddTask }
-						       onEditTitle={ onEditListTitle }
-						       onRemoveTask={ onRemoveTask }
-						       onEditTask={ onEditTask }
-						       onCompleteTask={ onCompleteTask }
-						       withoutEmpty/>
+					{ chapters && chapters.map(chapter => (
+						<Lessons key={ chapter.id }
+						         chapter={ chapter }
+						         onAddLesson={ onAddLesson }
+						         onEditTitle={ onEditChapterTitle }
+						         onRemoveLesson={ onRemoveLesson }
+						         onEditLesson={ onEditLesson }
+						         onCompleteLesson={ onCompleteLesson }
+						         withoutEmpty/>
 					)) }
 				</Route>
-				<Route path='/lists/:id'>
-					{ lists && activeItem && (
-						<Tasks
-							list={ activeItem }
-							onAddTask={ onAddTask }
-							onEditTitle={ onEditListTitle }
-							onRemoveTask={ onRemoveTask }
-							onEditTask={ onEditTask }
-							onCompleteTask={ onCompleteTask }/>
+				<Route path='/chapters/:id'>
+					{ chapters && activeItem && (
+						<Lessons
+							chapter={ activeItem }
+							onAddLesson={ onAddLesson }
+							onEditTitle={ onEditChapterTitle }
+							onRemoveLesson={ onRemoveLesson }
+							onEditLesson={ onEditLesson }
+							onCompleteLesson={ onCompleteLesson }/>
 					) }
 				</Route>
 			</div>

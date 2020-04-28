@@ -3,22 +3,22 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 
-import { Task, AddTaskForm, host } from '../../components';
+import { AddLessonForm, host, Lesson } from '../../components';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
-import './Tasks.scss';
+import './Lessons.scss';
 
 library.add(fas);
 
-const Tasks = ({ list, onEditTitle, onAddTask, onRemoveTask, onEditTask, onCompleteTask, withoutEmpty }) => {
+const Lessons = ({ chapter, onEditTitle, onAddLesson, onRemoveLesson, onEditLesson, onCompleteLesson, withoutEmpty }) => {
 	const editTitle = () => {
 		Swal.fire({
 			title: 'Введите название списка',
 			input: 'text',
-			inputValue: list.name,
+			inputValue: chapter.name,
 			showCancelButton: true,
 			cancelButtonText: 'Отмена',
 			confirmButtonColor: '#42B883',
@@ -30,8 +30,8 @@ const Tasks = ({ list, onEditTitle, onAddTask, onRemoveTask, onEditTask, onCompl
 			}
 		}).then(({ value }) => {
 			if (value) {
-				onEditTitle(list.id, value);
-				axios.patch(`http://${ host.ip }:${ host.port }/lists/${ list.id }`, {
+				onEditTitle(chapter.id, value);
+				axios.patch(`http://${ host.ip }:${ host.port }/chapters/${ chapter.id }`, {
 					name: value
 				}).then(() => {
 					console.debug(`Заголовок текущего списка изменён на ${ value }`);
@@ -49,36 +49,36 @@ const Tasks = ({ list, onEditTitle, onAddTask, onRemoveTask, onEditTask, onCompl
 	};
 
 	return (
-		<div className='tasks'>
-			<Link to={ `/lists/${ list.id }` }>
-				<div className='tasks__header'>
-					<h2 className='tasks__header__title' style={ { color: list.color.hex } }>
-						{ list.name }
+		<div className='lessons'>
+			<Link to={ `/chapters/${ chapter.id }` }>
+				<div className='lessons__header'>
+					<h2 className='lessons__header__title' style={ { color: chapter.color.hex } }>
+						{ chapter.name }
 					</h2>
-					<FontAwesomeIcon className='tasks__header__list-name-edit-button'
+					<FontAwesomeIcon className='lessons__header__chapter-name-edit-button'
 					                 icon='pen'
 					                 onClick={ editTitle }/>
 				</div>
 			</Link>
 
-			<div className='tasks__items'>
-				{ list.tasks &&
-				list.tasks.map(task => (
-					<Task
-						key={ task.id }
-						list={ list }
-						onEdit={ onEditTask }
-						onRemove={ onRemoveTask }
-						onComplete={ onCompleteTask }
-						{ ...task }/>
+			<div className='lessons__items'>
+				{ chapter.lessons &&
+				chapter.lessons.map(lesson => (
+					<Lesson
+						key={ lesson.id }
+						chapter={ chapter }
+						onEdit={ onEditLesson }
+						onRemove={ onRemoveLesson }
+						onComplete={ onCompleteLesson }
+						{ ...lesson }/>
 				)) }
-				<AddTaskForm key={ list.id } list={ list } onAddTask={ onAddTask }/>
-				{ !withoutEmpty && list.tasks && !list.tasks.length && (
-					<h2 className='no-tasks'>Задачи отсутствуют</h2>
+				<AddLessonForm key={ chapter.id } chapter={ chapter } onAddLesson={ onAddLesson }/>
+				{ !withoutEmpty && chapter.lessons && !chapter.lessons.length && (
+					<h2 className='no-lessons'>Задачи отсутствуют</h2>
 				) }
 			</div>
 		</div>
 	);
 };
 
-export default Tasks;
+export default Lessons;

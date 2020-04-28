@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
-import { List, Badge, host } from '../../components';
+import { Badge, Chapter, host } from '../../components';
 
-import './AddListButton.scss';
+import './AddСhapterButton.scss';
 
 library.add(fas);
 
-const AddListButton = ({ colors, onAdd }) => {
+const AddChapterButton = ({ colors, onAdd }) => {
 	const [visiblePopup, setVisiblePopup] = useState(false);
 	const [selectedColor, selectColor] = useState(3);
 	const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +29,7 @@ const AddListButton = ({ colors, onAdd }) => {
 		selectColor(colors[0].id);
 	};
 
-	const addList = () => {
+	const addChapter = () => {
 		if (!inputValue) {
 			alert('Введите название списка');
 			return;
@@ -37,13 +37,13 @@ const AddListButton = ({ colors, onAdd }) => {
 
 		setIsLoading(true);
 
-		axios.post(`http://${host.ip}:${host.port}/lists`, {
+		axios.post(`http://${ host.ip }:${ host.port }/chapters`, {
 			name: inputValue.capitalize(),
 			colorId: selectedColor
 		}).then(({ data }) => {
 			const color = colors.filter(c => c.id === selectedColor)[0];
-			const listObj = { ...data, color, tasks: [] };
-			onAdd(listObj);
+			const chapterObj = { ...data, color, lessons: [] };
+			onAdd(chapterObj);
 			onClose();
 		}).then(() => {
 			console.debug(`Список задач '${ inputValue }' успешно добавлен`);
@@ -57,16 +57,16 @@ const AddListButton = ({ colors, onAdd }) => {
 	};
 
 	return (
-		<div className='add-list'>
-			<List onClick={ () => setVisiblePopup(true) }
-			      items={ [{
-				      className: 'add-list__button',
-				      icon: 'plus',
-				      name: 'Добавить список'
-			      }] }/>
+		<div className='add-chapter'>
+			<Chapter onClick={ () => setVisiblePopup(true) }
+			         items={ [{
+				         className: 'add-chapter__button',
+				         icon: 'plus',
+				         name: 'Добавить список'
+			         }] }/>
 			{ visiblePopup && (
-				<div className='add-list__popup'>
-					<FontAwesomeIcon className={ 'add-list__popup__close-button' }
+				<div className='add-chapter__popup'>
+					<FontAwesomeIcon className={ 'add-chapter__popup__close-button' }
 					                 icon={ 'times-circle' }
 					                 onClick={ onClose }/>
 					<input className='field'
@@ -74,7 +74,7 @@ const AddListButton = ({ colors, onAdd }) => {
 					       placeholder='Название списка'
 					       value={ inputValue }
 					       onChange={ e => setInputValue(e.target.value) }/>
-					<div className='add-list__popup__colors'>
+					<div className='add-chapter__popup__colors'>
 						{ colors.map(color => (
 							<Badge key={ color.id }
 							       className={ selectedColor === color.id && 'active' }
@@ -82,7 +82,7 @@ const AddListButton = ({ colors, onAdd }) => {
 							       color={ color.name }/>
 						)) }
 					</div>
-					<button onClick={ addList } className='button'>
+					<button onClick={ addChapter } className='button'>
 						{ isLoading ? 'Добавление...' : 'Добавить' }
 					</button>
 				</div>
@@ -91,4 +91,4 @@ const AddListButton = ({ colors, onAdd }) => {
 	);
 };
 
-export default AddListButton;
+export default AddChapterButton;

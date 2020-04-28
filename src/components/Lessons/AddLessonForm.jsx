@@ -9,7 +9,7 @@ import { host } from '../../components';
 
 library.add(fas);
 
-const AddTaskForm = ({ list, onAddTask }) => {
+const AddLessonForm = ({ chapter, onAddLesson }) => {
 	const [visibleForm, setFormVisible] = useState(false);
 	const [inputValue, setInputValue] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
@@ -19,15 +19,15 @@ const AddTaskForm = ({ list, onAddTask }) => {
 		setInputValue('');
 	};
 
-	const addTask = () => {
-		const newTask = {
-			listId: list.id,
+	const addLesson = () => {
+		const newLesson = {
+			chapterId: chapter.id,
 			text: inputValue.capitalize(),
 			completed: false
 		};
 		setIsLoading(true);
-		axios.post(`http://${ host.ip }:${ host.port }/tasks`, newTask).then(({ data }) => {
-			onAddTask(list.id, data);
+		axios.post(`http://${ host.ip }:${ host.port }/lessons`, newLesson).then(({ data }) => {
+			onAddLesson(chapter.id, data);
 			toggleFormVisible();
 		}).then(() => {
 			console.debug(`Задача '${ inputValue }' успешно добавлена`);
@@ -41,21 +41,21 @@ const AddTaskForm = ({ list, onAddTask }) => {
 	};
 
 	return (
-		<div className='tasks__form'>
+		<div className='lessons__form'>
 			{ !visibleForm ? (
-				<div className='tasks__form-new' onClick={ toggleFormVisible }>
+				<div className='lessons__form-new' onClick={ toggleFormVisible }>
 					<FontAwesomeIcon className='icon'
 					                 icon={ 'plus' }/>
 					<span>Новая задача</span>
 				</div>
 			) : (
-				<div className='tasks__form-block'>
+				<div className='lessons__form-block'>
 					<input className='field'
 					       type='text' autoFocus
 					       placeholder='Текст задачи'
 					       value={ inputValue }
 					       onChange={ e => setInputValue(e.target.value) }/>
-					<button disabled={ isLoading } onClick={ addTask } className='button'>
+					<button disabled={ isLoading } onClick={ addLesson } className='button'>
 						{ isLoading ? 'Добавление...' : 'Добавить задачу' }
 					</button>
 					<button className='button button--grey' onClick={ toggleFormVisible }>
@@ -67,4 +67,4 @@ const AddTaskForm = ({ list, onAddTask }) => {
 	);
 };
 
-export default AddTaskForm;
+export default AddLessonForm;
