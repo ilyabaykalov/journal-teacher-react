@@ -31,7 +31,7 @@ const AddChapterButton = ({ colors, onAdd }) => {
 
 	const addChapter = () => {
 		if (!inputValue) {
-			alert('Введите название списка');
+			alert('Введите заголовок главы');
 			return;
 		}
 
@@ -46,11 +46,11 @@ const AddChapterButton = ({ colors, onAdd }) => {
 			onAdd(chapterObj);
 			onClose();
 		}).then(() => {
-			console.debug(`Список задач '${ inputValue }' успешно добавлен`);
+			console.debug(`Глава '${ inputValue }' успешно добавлена`);
 		}).catch(error => {
-			console.error('Ошибка при добавлении списка');
+			console.error('Ошибка при добавлении главы');
 			console.error(`Ошибка: ${ error }`);
-			alert('Ошибка при добавлении списка');
+			alert('Ошибка при добавлении главы');
 		}).finally(() => {
 			setIsLoading(false);
 		});
@@ -62,7 +62,7 @@ const AddChapterButton = ({ colors, onAdd }) => {
 			         items={ [{
 				         className: 'add-chapter__button',
 				         icon: 'plus',
-				         name: 'Добавить список'
+				         name: 'Добавить главу'
 			         }] }/>
 			{ visiblePopup && (
 				<div className='add-chapter__popup'>
@@ -71,7 +71,7 @@ const AddChapterButton = ({ colors, onAdd }) => {
 					                 onClick={ onClose }/>
 					<input className='field'
 					       type='text' autoFocus
-					       placeholder='Название списка'
+					       placeholder='Название главы'
 					       value={ inputValue }
 					       onChange={ e => setInputValue(e.target.value) }/>
 					<div className='add-chapter__popup__colors'>

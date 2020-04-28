@@ -18,11 +18,11 @@ const Chapter = ({ items, isRemovable, onClick, onRemove, onClickItem, activeIte
 		const chapterName = chapter.name;
 
 		Swal.fire({
-			title: `Вы уверены что хотите удалить список "${ chapterName }"?`,
+			title: `Вы уверены что хотите удалить главу\n"${ chapterName }"?`,
 			icon: 'question',
 			confirmButtonColor: '#42B883',
 			cancelButtonColor: '#C9D1D3',
-			confirmButtonText: 'Да, удалить!',
+			confirmButtonText: 'Да, удалить',
 			showCancelButton: true,
 			cancelButtonText: 'Отмена',
 			focusConfirm: false,
@@ -32,13 +32,13 @@ const Chapter = ({ items, isRemovable, onClick, onRemove, onClickItem, activeIte
 				axios.delete(`http://${ host.ip }:${ host.port }/chapters/${ chapter.id }`).then(() => {
 					onRemove(chapter.id);
 				}).then(() => {
-					console.debug(`Список '${ chapterName }' успешно удален`);
+					console.debug(`Глава '${ chapterName }' успешно удалена`);
 				}).catch(error => {
 					Swal.fire({
 						icon: 'error',
-						title: 'Не удалось удалить список'
+						title: 'Не удалось удалить главу'
 					}).finally(() => {
-						console.error('Не удалось удалить список');
+						console.error('Не удалось удалить главу');
 						console.error(`Ошибка: ${ error }`);
 					});
 				});

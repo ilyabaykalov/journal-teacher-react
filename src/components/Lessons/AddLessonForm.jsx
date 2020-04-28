@@ -31,11 +31,11 @@ const AddLessonForm = ({ chapter, onAddLesson }) => {
 			onAddLesson(chapter.id, data);
 			toggleFormVisible();
 		}).then(() => {
-			console.debug(`Задача '${ inputValue }' успешно добавлена`);
+			console.debug(`Урок '${ inputValue }' успешно добавлена`);
 		}).catch(error => {
-			console.error('Ошибка при добавлении задачи');
+			console.error('Ошибка при добавлении урока');
 			console.error(`Ошибка: ${ error }`);
-			alert('Ошибка при добавлении задачи');
+			alert('Ошибка при добавлении урока');
 		}).finally(() => {
 			setIsLoading(false);
 		});
@@ -47,17 +47,17 @@ const AddLessonForm = ({ chapter, onAddLesson }) => {
 				<div className='lessons__form-new' onClick={ toggleFormVisible }>
 					<FontAwesomeIcon className='icon'
 					                 icon={ 'plus' }/>
-					<span>Новая задача</span>
+					<span>Новый урок</span>
 				</div>
 			) : (
 				<div className='lessons__form-block'>
 					<input className='field'
 					       type='text' autoFocus
-					       placeholder='Текст задачи'
+					       placeholder='Название урока'
 					       value={ inputValue }
 					       onChange={ e => setInputValue(e.target.value) }/>
 					<button disabled={ isLoading } onClick={ addLesson } className='button'>
-						{ isLoading ? 'Добавление...' : 'Добавить задачу' }
+						{ isLoading ? 'Добавление...' : 'Добавить урок' }
 					</button>
 					<button className='button button--grey' onClick={ toggleFormVisible }>
 						Отмена

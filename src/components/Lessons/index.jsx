@@ -16,7 +16,7 @@ library.add(fas);
 const Lessons = ({ chapter, onEditTitle, onAddLesson, onRemoveLesson, onEditLesson, onCompleteLesson, withoutEmpty }) => {
 	const editTitle = () => {
 		Swal.fire({
-			title: 'Введите название списка',
+			title: 'Введите заголовок главы',
 			input: 'text',
 			inputValue: chapter.name,
 			showCancelButton: true,
@@ -34,13 +34,13 @@ const Lessons = ({ chapter, onEditTitle, onAddLesson, onRemoveLesson, onEditLess
 				axios.patch(`http://${ host.ip }:${ host.port }/chapters/${ chapter.id }`, {
 					name: value
 				}).then(() => {
-					console.debug(`Заголовок текущего списка изменён на ${ value }`);
+					console.debug(`Заголовок текущей главы изменён на ${ value }`);
 				}).catch(error => {
 					Swal.fire({
 						icon: 'error',
-						title: 'Не удалось обновить название списка'
+						title: 'Не удалось обновить заголовок главы'
 					}).then(() => {
-						console.error('Не удалось обновить название списка');
+						console.error('Не удалось обновить заголовок главы');
 						console.error(`Ошибка: ${ error }`);
 					});
 				});
@@ -74,7 +74,7 @@ const Lessons = ({ chapter, onEditTitle, onAddLesson, onRemoveLesson, onEditLess
 				)) }
 				<AddLessonForm key={ chapter.id } chapter={ chapter } onAddLesson={ onAddLesson }/>
 				{ !withoutEmpty && chapter.lessons && !chapter.lessons.length && (
-					<h2 className='no-lessons'>Задачи отсутствуют</h2>
+					<h2 className='no-lessons'>Уроки отсутствуют</h2>
 				) }
 			</div>
 		</div>

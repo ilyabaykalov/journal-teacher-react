@@ -65,7 +65,7 @@ function App() {
 
 	const onEditLesson = (chapterId, updLesson) => {
 		Swal.fire({
-			title: 'Введите текст задачи',
+			title: 'Введите заголовок урока',
 			input: 'text',
 			inputValue: updLesson.text,
 			showCancelButton: true,
@@ -99,9 +99,9 @@ function App() {
 				}).catch(error => {
 					Swal.fire({
 						icon: 'error',
-						title: 'Не удалось изменить текст задачи'
+						title: 'Не удалось изменить заголовок урока'
 					}).then(() => {
-						console.error('Не удалось изменить текст задачи');
+						console.error('Не удалось изменить заголовок урока');
 						console.error(`Ошибка: ${ error }`);
 					});
 				});
@@ -194,7 +194,7 @@ function App() {
 				} } items={ [{
 					active: history.location.pathname === '/',
 					icon: 'list',
-					name: 'Все задачи'
+					name: 'Все главы'
 				}] }/>
 				{ chapters ? (
 					<Chapter items={ chapters }
