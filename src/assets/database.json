@@ -1,103 +1,102 @@
 {
   "chapters": [
     {
-      "id": 2,
-      "name": "Фронтенд",
+      "id": 1,
+      "name": "Основы JavaScript",
       "colorId": 4
-    },
-    {
-      "id": 3,
-      "name": "Сериальчики чики чики",
-      "colorId": 3
-    },
-    {
-      "id": 4,
-      "name": "Книги",
-      "colorId": 2
-    },
-    {
-      "name": "Спорт",
-      "colorId": 3,
-      "id": 6
-    },
-    {
-      "name": "Курс по ReactJS ToDo",
-      "colorId": 7,
-      "id": 7
     }
   ],
   "lessons": [
     {
-      "id": 1,
-      "chapterId": 2,
-      "text": "Изучить JavaScript",
-      "completed": true
+      "chapterId": 1,
+      "title": "Переменные",
+      "text": "",
+      "completed": true,
+      "id": 1
     },
     {
-      "id": 2,
-      "chapterId": 2,
-      "text": "Изучить паттерны проектирования",
-      "completed": true
+      "chapterId": 1,
+      "title": "Типы данных",
+      "text": "",
+      "completed": true,
+      "id": 2
     },
     {
-      "id": 3,
-      "chapterId": 2,
-      "text": "ReactJS Hooks (useState, useReducer, useEffect и т.д.)",
-      "completed": true
+      "chapterId": 1,
+      "title": "Преобразование типов",
+      "text": "",
+      "completed": true,
+      "id": 3
     },
     {
-      "id": 4,
-      "chapterId": 2,
-      "text": "Redux (redux-observable, redux-saga)",
-      "completed": true
+      "chapterId": 1,
+      "title": "Операторы",
+      "text": "",
+      "completed": true,
+      "id": 4
     },
     {
-      "chapterId": 4,
-      "text": "Дочитать \"Чистый код\"",
-      "completed": false,
+      "chapterId": 1,
+      "title": "Операторы сравнения",
+      "text": "",
+      "completed": true,
+      "id": 5
+    },
+    {
+      "chapterId": 1,
+      "title": "Взаимодействие: alert, prompt, confirm",
+      "text": "",
+      "completed": true,
+      "id": 6
+    },
+    {
+      "chapterId": 1,
+      "title": "Условные операторы: if, '?'",
+      "text": "",
+      "completed": true,
+      "id": 7
+    },
+    {
+      "chapterId": 1,
+      "title": "Логические операторы",
+      "text": "",
+      "completed": true,
+      "id": 8
+    },
+    {
+      "chapterId": 1,
+      "title": "Циклы while и for",
+      "text": "",
+      "completed": true,
+      "id": 9
+    },
+    {
+      "chapterId": 1,
+      "title": "Конструкция \"switch\"",
+      "text": "",
+      "completed": true,
       "id": 10
     },
     {
-      "chapterId": 7,
-      "text": "Сделали сайдбар",
-      "completed": true,
-      "id": 15
-    },
-    {
-      "chapterId": 7,
-      "text": "Сделали список задач",
-      "completed": true,
-      "id": 16
-    },
-    {
-      "chapterId": 7,
-      "text": "Сделали удаление и редактирование задач и списков",
-      "completed": true,
-      "id": 17
-    },
-    {
-      "chapterId": 6,
-      "text": "Делать с утра зарядку",
-      "completed": true,
-      "id": 18
-    },
-    {
-      "chapterId": 6,
-      "text": "Присесть 150 раз за день",
+      "chapterId": 1,
+      "title": "Функции",
+      "text": "",
       "completed": false,
-      "id": 19
+      "id": 11
     },
     {
-      "chapterId": 3,
-      "text": "Досмотреть Ходячих мертвецов",
-      "completed": true,
-      "id": 21
+      "chapterId": 1,
+      "title": "Функции-стрелки, основы",
+      "text": "",
+      "completed": false,
+      "id": 12
     },
     {
-      "chapterId": 3,
-      "text": "Досмотреть 6 сезон",
-      "completed": true,
-      "id": 22
+      "chapterId": 1,
+      "title": "Особенности JavaScript",
+      "text": "",
+      "completed": false,
+      "id": 13
     }
   ],
   "colors": [

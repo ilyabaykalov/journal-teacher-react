@@ -6,7 +6,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 
 library.add(fas);
 
-const Lesson = ({ id, text, completed, chapter, onRemove, onEdit, onComplete }) => {
+const Lesson = ({ id, title, completed, chapter, onRemove, onEdit, onComplete }) => {
 	const [classNames, setClassNames] = useState(completed ? 'completed' : '');
 
 	const onChangeCheckbox = e => {
@@ -26,9 +26,9 @@ const Lesson = ({ id, text, completed, chapter, onRemove, onEdit, onComplete }) 
 					                 icon='check'/>
 				</label>
 			</div>
-			<p className={ classNames }>{ text }</p>
+			<p className={ classNames }>{ title }</p>
 			<div className='lessons__items-row-actions'>
-				<div onClick={ () => onEdit(chapter.id, { id, text }) }>
+				<div onClick={ () => onEdit(chapter.id, { id, title }) }>
 					<FontAwesomeIcon className={ 'lessons__items-row-actions__edit-button' }
 					                 icon={ 'pen' }/>
 				</div>
