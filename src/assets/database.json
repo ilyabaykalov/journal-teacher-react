@@ -10,16 +10,16 @@
     {
       "chapterId": 1,
       "title": "Переменные",
-      "text": "делай то се 5 10",
+      "homework": "делай то се 5 10",
       "completed": true,
       "id": 1,
-      "lessonMark": "2",
-      "homeworkMark": "3"
+      "lessonMark": "4",
+      "homeworkMark": "none"
     },
     {
       "chapterId": 1,
       "title": "Типы данных",
-      "text": "Нет задания",
+      "homework": "Нет заданияdsa",
       "completed": true,
       "id": 2,
       "lessonMark": "none",
@@ -28,58 +28,60 @@
     {
       "chapterId": 1,
       "title": "Преобразование типов",
-      "text": "Нет задания",
+      "homework": "Нет заданияas",
       "completed": true,
-      "id": 3
+      "id": 3,
+      "lessonMark": "none",
+      "homeworkMark": "none"
     },
     {
       "chapterId": 1,
       "title": "Операторы",
-      "text": "Нет задания",
+      "homework": "Нет задания",
       "completed": true,
       "id": 4
     },
     {
       "chapterId": 1,
       "title": "Операторы сравнения",
-      "text": "Нет задания",
+      "homework": "Нет задания",
       "completed": true,
       "id": 5,
       "lessonMark": "5",
-      "homeworkMark": "none"
+      "homeworkMark": "2"
     },
     {
       "chapterId": 1,
       "title": "Взаимодействие: alert, prompt, confirm",
-      "text": "Нет задания",
+      "homework": "Нет задания",
       "completed": true,
       "id": 6
     },
     {
       "chapterId": 1,
       "title": "Условные операторы: if, '?'",
-      "text": "Нет задания",
+      "homework": "Нет задания",
       "completed": true,
       "id": 7
     },
     {
       "chapterId": 1,
       "title": "Логические операторы",
-      "text": "Нет задания",
+      "homework": "Нет задания",
       "completed": true,
       "id": 8
     },
     {
       "chapterId": 1,
       "title": "Циклы while и for",
-      "text": "Нет задания",
+      "homework": "Нет задания",
       "completed": true,
       "id": 9
     },
     {
       "chapterId": 1,
       "title": "Конструкция \"switch\"",
-      "text": "Нет задания",
+      "homework": "Нет задания",
       "completed": true,
       "id": 10,
       "lessonMark": "3",
@@ -88,21 +90,21 @@
     {
       "chapterId": 1,
       "title": "Функции",
-      "text": "Нет задания",
+      "homework": "Нет задания",
       "completed": false,
       "id": 11
     },
     {
       "chapterId": 1,
       "title": "Функции-стрелки, основы",
-      "text": "Нет задания",
+      "homework": "Нет задания",
       "completed": false,
       "id": 12
     },
     {
       "chapterId": 1,
       "title": "Особенности JavaScript",
-      "text": "Нет задания",
+      "homework": "Нет задания",
       "completed": false,
       "id": 13
     }

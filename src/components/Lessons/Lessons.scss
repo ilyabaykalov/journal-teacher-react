@@ -55,6 +55,14 @@
           margin-left: 15px;
           color: $grey--light;
           align-self: center;
+
+          &.good{
+            color: $green--light;
+          }
+
+          &.bad{
+            color: $red--light
+          }
         }
       }
 

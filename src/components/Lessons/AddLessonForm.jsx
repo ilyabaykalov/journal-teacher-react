@@ -23,7 +23,7 @@ const AddLessonForm = ({ chapter, onAddLesson }) => {
 		const newLesson = {
 			chapterId: chapter.id,
 			title: inputValue.capitalize(),
-			text: 'Нет задания',
+			homework: 'Нет задания',
 			completed: false
 		};
 		setIsLoading(true);

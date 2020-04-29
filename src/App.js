@@ -15,17 +15,18 @@ function App() {
 	const [chapters, updateChapters] = useState(null);
 	const [colors, setColors] = useState(null);
 	const [activeItem, setActiveItem] = useState(null);
+	const [hasHomework, setHasHomework] = useState(false);
 	let history = useHistory();
 
 	useEffect(() => {
 		axios.get(`http://${ host.ip }:${ host.port }/chapters?_expand=color&_embed=lessons`).then(({ data }) => {
 			updateChapters(data);
 		}).then(() => {
-			console.debug(`Списки задач успешно получены с сервера`);
+			console.debug(`Главы успешно получены с сервера`);
 		}).catch(error => {
-			console.error('Не удалось получить списки задач с сервера');
+			console.error('Не удалось получить главы с сервера');
 			console.error(`Ошибка: ${ error }`);
-			alert('Не удалось получить списки задач с сервера');
+			alert('Не удалось получить главы с сервера');
 		});
 
 		axios.get(`http://${ host.ip }:${ host.port }/colors`).then(({ data }) => {
@@ -63,19 +64,19 @@ function App() {
 		updateChapters(newChapter);
 	};
 
-	const onEditLesson = (chapterId, updLesson) => {
-		console.log(updLesson.homeworkMark);
+	const onEditLesson = (chapterId, updLesson, setHomeworkIconColor) => {
+		setHasHomework(updLesson.homework !== 'Нет задания')
+
 		Swal.fire({
 			title: 'Введите данные урока',
 			html:
 				`<label for='lessonTitle'>Название урока</label>
 					<input id='lessonTitle' class='swal2-input' value='${ updLesson.title }'>
 				<label for='lessonText'>Домашнее задание</label>
-					<textarea id='lessonText' class='swal2-textarea'>${ updLesson.text.length > 0 ? updLesson.text : 'Нет задания' }</textarea>
-				<p>Оценки</p>
+					<textarea id='lessonText' class='swal2-textarea' oninput='{this.setHasHomework(this.value!== "Нет задания")}'>${ updLesson.homework.length > 0 ? updLesson.homework : 'Нет задания' }</textarea>
 				<div class='mark-container'>
 					<div class='lesson'>
-						<label for='lessonMark'>За урок</label>
+						<label for='lessonMark'>Оценка за урок</label>
 						<select id='lessonMark' class='swal2-select'>
 							<option value='none' ${ updLesson.lessonMark === 'none' ? 'selected' : '' }>Нет оценки</option>
 							<option value='2' ${ updLesson.lessonMark === '2' ? 'selected' : '' }>2</option>
@@ -84,8 +85,8 @@ function App() {
 							<option value='5' ${ updLesson.lessonMark === '5' ? 'selected' : '' }>5</option>
 						</select>
 					</div>
-					<div class='homework'>
-						<label for='homeworkMark'>За домашнее задание</label>
+					<div class='homework' ${ hasHomework ? 'style="display:none"' : '' }>
+						<label for='homeworkMark'>Оценка за домашнее задание</label>
 						<select id='homeworkMark' class='swal2-select'>
 							<option value='none' ${ updLesson.homeworkMark === 'none' ? 'selected' : '' }>Нет оценки</option>
 							<option value='2' ${ updLesson.homeworkMark === '2' ? 'selected' : '' }>2</option>
@@ -105,23 +106,23 @@ function App() {
 			preConfirm() {
 				return {
 					title: document.getElementById('lessonTitle').value.trim(),
-					text: document.getElementById('lessonText').value.trim(),
+					homework: document.getElementById('lessonText').value.trim(),
 					lessonMark: document.getElementById('lessonMark').value,
 					homeworkMark: document.getElementById('homeworkMark').value
 				};
 			}
 		}).then(({ value, dismiss }) => {
-			console.log(value);
 			if (value) {
-				if (value.title && value.text) {
+				if (value.title && value.homework) {
 					return [chapters.map(chapter => {
 						if (chapter.id === chapterId) {
 							chapter.lessons = chapter.lessons.map(lesson => {
 								if (lesson.id === updLesson.id) {
 									lesson.title = value.title;
-									lesson.text = value.text;
+									lesson.homework = value.homework;
 									lesson.lessonMark = value.lessonMark;
 									lesson.homeworkMark = value.homeworkMark;
+									setHomeworkIconColor(value.homeworkMark === 'none' ? 'homework-icon' : value.homeworkMark >= 4 ? 'homework-icon good' : 'homework-icon bad');
 								}
 								return lesson;
 							});
@@ -131,13 +132,12 @@ function App() {
 				}
 			} else return [null, dismiss];
 		}).then(([chapter, value]) => {
-			console.log(value);
 			if (chapter && value) {
-				if (value.title && value.text) {
+				if (value.title && value.homework) {
 					updateChapters(chapter);
 					axios.patch(`http://${ host.ip }:${ host.port }/lessons/${ updLesson.id }`, {
 						title: value.title,
-						text: value.text,
+						homework: value.homework,
 						lessonMark: value.lessonMark,
 						homeworkMark: value.homeworkMark
 					}).catch(error => {
@@ -160,7 +160,7 @@ function App() {
 			if (chapter.id === chapterId) {
 				chapter.lessons = chapter.lessons.map(lesson => {
 					if (lesson.id === lessonId) {
-						lessonName = lesson.text;
+						lessonName = lesson.title;
 					}
 					return lesson;
 				});
