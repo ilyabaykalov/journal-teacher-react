@@ -66,7 +66,6 @@ function App() {
 
 	const onEditLesson = (chapterId, updLesson, setHomeworkIconColor) => {
 		setHasHomework(updLesson.homework !== 'Нет задания')
-
 		Swal.fire({
 			title: 'Введите данные урока',
 			html:
