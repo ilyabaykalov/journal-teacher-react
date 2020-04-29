@@ -27,7 +27,11 @@ const Lesson = ({ id, title, text, lessonMark, homeworkMark, completed, chapter,
 						                 icon='check'/>
 					</label>
 				</div>
-				<p className={ classNames }>{ title }</p>
+				<p className={ classNames }>{ title }
+					{
+						text!=='Нет задания' && <FontAwesomeIcon className='homework-icon' icon='book'/>
+					}
+				</p>
 			</div>
 			<div className='mark'>
 				<p>{ !lessonMark || lessonMark === 'none' ? 'Нет оценки за урок' : `Оценка за урок: ${ lessonMark }` }</p>

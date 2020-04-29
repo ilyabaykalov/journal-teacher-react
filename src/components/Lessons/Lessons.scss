@@ -50,6 +50,12 @@
         display: flex;
         flex: 1 1;
         min-width: 40%;
+
+        .homework-icon{
+          margin-left: 15px;
+          color: $grey--light;
+          align-self: center;
+        }
       }
 
       &:hover &-actions {
@@ -58,6 +64,7 @@
 
       .title {
         width: 65%;
+        align-self: center;
       }
 
       .mark {
