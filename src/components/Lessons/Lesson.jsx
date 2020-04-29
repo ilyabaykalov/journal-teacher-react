@@ -34,7 +34,7 @@ const Lesson = ({ id, title, text, lessonMark, homeworkMark, completed, chapter,
 				<p>{ !homeworkMark || homeworkMark === 'none' ? 'Нет оценки за д/з' : `Оценка за д/з: ${ homeworkMark }` }</p>
 			</div>
 			<div className='lessons__items-row-actions'>
-				<div onClick={ () => onEdit(chapter.id, { id, title, text }) }>
+				<div onClick={ () => onEdit(chapter.id, { id, title, text, lessonMark, homeworkMark }) }>
 					<FontAwesomeIcon className={ 'lessons__items-row-actions__edit-button' }
 					                 icon={ 'pen' }/>
 				</div>

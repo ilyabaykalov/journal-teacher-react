@@ -1,4 +1,4 @@
-# Список задач (ToDo) на React
+# Журнал для ведения удаленных занятий на React (версия Teacher)
 
 **Stack:**
 - ReactJS (useState, useReducer, useEffect)

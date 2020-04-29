@@ -64,6 +64,7 @@ function App() {
 	};
 
 	const onEditLesson = (chapterId, updLesson) => {
+		console.log(updLesson.homeworkMark);
 		Swal.fire({
 			title: 'Введите данные урока',
 			html:
@@ -76,21 +77,21 @@ function App() {
 					<div class='lesson'>
 						<label for='lessonMark'>За урок</label>
 						<select id='lessonMark' class='swal2-select'>
-							<option value='none'>Нет оценки</option>
-							<option value='2'>2</option>
-							<option value='3'>3</option>
-							<option value='4'>4</option>
-							<option value='5'>5</option>
+							<option value='none' ${ updLesson.lessonMark === 'none' ? 'selected' : '' }>Нет оценки</option>
+							<option value='2' ${ updLesson.lessonMark === '2' ? 'selected' : '' }>2</option>
+							<option value='3' ${ updLesson.lessonMark === '3' ? 'selected' : '' }>3</option>
+							<option value='4' ${ updLesson.lessonMark === '4' ? 'selected' : '' }>4</option>
+							<option value='5' ${ updLesson.lessonMark === '5' ? 'selected' : '' }>5</option>
 						</select>
 					</div>
 					<div class='homework'>
 						<label for='homeworkMark'>За домашнее задание</label>
 						<select id='homeworkMark' class='swal2-select'>
-							<option value='none'>Нет оценки</option>
-							<option value='2'>2</option>
-							<option value='3'>3</option>
-							<option value='4'>4</option>
-							<option value='5'>5</option>
+							<option value='none' ${ updLesson.homeworkMark === 'none' ? 'selected' : '' }>Нет оценки</option>
+							<option value='2' ${ updLesson.homeworkMark === '2' ? 'selected' : '' }>2</option>
+							<option value='3' ${ updLesson.homeworkMark === '3' ? 'selected' : '' }>3</option>
+							<option value='4' ${ updLesson.homeworkMark === '4' ? 'selected' : '' }>4</option>
+							<option value='5' ${ updLesson.homeworkMark === '5' ? 'selected' : '' }>5</option>
 						</select>
 					</div>
 				</div>`,
