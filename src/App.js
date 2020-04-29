@@ -63,7 +63,7 @@ function App() {
 		updateChapters(newChapter);
 	};
 
-	const onEditLesson = (chapterId, updLesson) => {
+	const onEditLesson = (chapterId, updLesson, setHomeworkIconColor) => {
 		console.log(updLesson.homeworkMark);
 		Swal.fire({
 			title: 'Введите данные урока',
@@ -111,7 +111,6 @@ function App() {
 				};
 			}
 		}).then(({ value, dismiss }) => {
-			console.log(value);
 			if (value) {
 				if (value.title && value.text) {
 					return [chapters.map(chapter => {
@@ -122,6 +121,7 @@ function App() {
 									lesson.text = value.text;
 									lesson.lessonMark = value.lessonMark;
 									lesson.homeworkMark = value.homeworkMark;
+									setHomeworkIconColor(value.homeworkMark === 'none' ? 'homework-icon' : value.homeworkMark >= 4 ? 'homework-icon good' : 'homework-icon bad')
 								}
 								return lesson;
 							});
@@ -131,7 +131,6 @@ function App() {
 				}
 			} else return [null, dismiss];
 		}).then(([chapter, value]) => {
-			console.log(value);
 			if (chapter && value) {
 				if (value.title && value.text) {
 					updateChapters(chapter);
