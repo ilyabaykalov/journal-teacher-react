@@ -20,6 +20,7 @@ const Lessons = ({ chapter, onEditTitle, onAddLesson, onRemoveLesson, onEditLess
 			input: 'text',
 			inputValue: chapter.name,
 			showCancelButton: true,
+			confirmButtonText: 'Сохранить',
 			cancelButtonText: 'Отмена',
 			confirmButtonColor: '#42B883',
 			cancelButtonColor: '#C9D1D3',

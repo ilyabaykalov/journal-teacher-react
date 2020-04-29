@@ -44,10 +44,32 @@
       display: flex;
       align-items: center;
       margin-bottom: 15px;
-      cursor: pointer;
+      cursor: default;
+
+      .titleWithCheckbox {
+        display: flex;
+        flex: 1 1;
+        min-width: 40%;
+      }
 
       &:hover &-actions {
         opacity: 1;
+      }
+
+      .title {
+        width: 65%;
+      }
+
+      .mark {
+        display: flex;
+        flex-direction: column;
+        flex: 0.2 1;
+        text-align: start;
+        margin: 0 20px 0 0;
+
+        p {
+          margin: 0;
+        }
       }
 
       .completed {

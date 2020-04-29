@@ -10,16 +10,20 @@
     {
       "chapterId": 1,
       "title": "Переменные",
-      "text": "",
+      "text": "Нет задания",
       "completed": true,
-      "id": 1
+      "id": 1,
+      "lessonMark": "4",
+      "homeworkMark": "none"
     },
     {
       "chapterId": 1,
       "title": "Типы данных",
-      "text": "",
+      "text": "Нет задания",
       "completed": true,
-      "id": 2
+      "id": 2,
+      "lessonMark": "none",
+      "homeworkMark": "none"
     },
     {
       "chapterId": 1,
@@ -38,9 +42,11 @@
     {
       "chapterId": 1,
       "title": "Операторы сравнения",
-      "text": "",
+      "text": "Нет задания",
       "completed": true,
-      "id": 5
+      "id": 5,
+      "lessonMark": "5",
+      "homeworkMark": "none"
     },
     {
       "chapterId": 1,

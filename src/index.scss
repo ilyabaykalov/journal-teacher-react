@@ -37,14 +37,16 @@
     overflow-y: scroll;
     overflow-x: hidden;
 
-    .loading{
+    .loading {
       display: flex;
       margin: 10px 15px 30px;
       color: $sidebar-dark-icon-color;
-      .icon{
+
+      .icon {
         align-self: center;
       }
-      p{
+
+      p {
         margin-left: 10px;
         color: $sidebar-dark-text-color;
       }
@@ -112,5 +114,25 @@
 
   &:focus {
     border-color: $input-border-color--focus;
+  }
+}
+
+.mark-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+
+  label {
+    margin-bottom: 5px;
+  }
+
+  select {
+    width: max-content;
+    align-self: center;
+  }
+
+  .lesson, .homework {
+    display: flex;
+    flex-direction: column;
   }
 }

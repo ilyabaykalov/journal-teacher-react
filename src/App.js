@@ -65,46 +65,90 @@ function App() {
 
 	const onEditLesson = (chapterId, updLesson) => {
 		Swal.fire({
-			title: 'Введите заголовок урока',
-			input: 'text',
-			inputValue: updLesson.text,
+			title: 'Введите данные урока',
+			html:
+				`<label for='lessonTitle'>Название урока</label>
+					<input id='lessonTitle' class='swal2-input' value='${ updLesson.title }'>
+				<label for='lessonText'>Домашнее задание</label>
+					<textarea id='lessonText' class='swal2-textarea'>${ updLesson.text.length > 0 ? updLesson.text : 'Нет задания' }</textarea>
+				<p>Оценки</p>
+				<div class='mark-container'>
+					<div class='lesson'>
+						<label for='lessonMark'>За урок</label>
+						<select id='lessonMark' class='swal2-select'>
+							<option value='none'>Нет оценки</option>
+							<option value='2'>2</option>
+							<option value='3'>3</option>
+							<option value='4'>4</option>
+							<option value='5'>5</option>
+						</select>
+					</div>
+					<div class='homework'>
+						<label for='homeworkMark'>За домашнее задание</label>
+						<select id='homeworkMark' class='swal2-select'>
+							<option value='none'>Нет оценки</option>
+							<option value='2'>2</option>
+							<option value='3'>3</option>
+							<option value='4'>4</option>
+							<option value='5'>5</option>
+						</select>
+					</div>
+				</div>`,
+			showCloseButton: true,
 			showCancelButton: true,
+			focusConfirm: false,
+			confirmButtonText: 'Сохранить',
 			cancelButtonText: 'Отмена',
 			confirmButtonColor: '#42B883',
 			cancelButtonColor: '#C9D1D3',
-			inputValidator: (value) => {
-				if (!value) {
-					return 'Поле не может быть пустым';
-				}
+			preConfirm() {
+				return {
+					title: document.getElementById('lessonTitle').value.trim(),
+					text: document.getElementById('lessonText').value.trim(),
+					lessonMark: document.getElementById('lessonMark').value,
+					homeworkMark: document.getElementById('homeworkMark').value
+				};
 			}
 		}).then(({ value, dismiss }) => {
+			console.log(value);
 			if (value) {
-				return [chapters.map(chapter => {
-					if (chapter.id === chapterId) {
-						chapter.lessons = chapter.lessons.map(lesson => {
-							if (lesson.id === updLesson.id) {
-								lesson.text = value;
-							}
-							return lesson;
-						});
-					}
-					return chapter;
-				}), value];
+				if (value.title && value.text) {
+					return [chapters.map(chapter => {
+						if (chapter.id === chapterId) {
+							chapter.lessons = chapter.lessons.map(lesson => {
+								if (lesson.id === updLesson.id) {
+									lesson.title = value.title;
+									lesson.text = value.text;
+									lesson.lessonMark = value.lessonMark;
+									lesson.homeworkMark = value.homeworkMark;
+								}
+								return lesson;
+							});
+						}
+						return chapter;
+					}), value];
+				}
 			} else return [null, dismiss];
 		}).then(([chapter, value]) => {
+			console.log(value);
 			if (chapter && value) {
-				updateChapters(chapter);
-				axios.patch(`http://${ host.ip }:${ host.port }/lessons/${ updLesson.id }`, {
-					text: value
-				}).catch(error => {
-					Swal.fire({
-						icon: 'error',
-						title: 'Не удалось изменить заголовок урока'
-					}).then(() => {
-						console.error('Не удалось изменить заголовок урока');
-						console.error(`Ошибка: ${ error }`);
+				if (value.title && value.text) {
+					updateChapters(chapter);
+					axios.patch(`http://${ host.ip }:${ host.port }/lessons/${ updLesson.id }`, {
+						title: value.title,
+						text: value.text,
+						lessonMark: value.lessonMark,
+						homeworkMark: value.homeworkMark
+					}).catch(error => {
+						Swal.fire({
+							icon: 'error',
+							title: 'Не удалось изменить данные урока'
+						}).then(() => {
+							console.error('Не удалось изменить данные урока');
+							console.error(`Ошибка: ${ error }`);
+						});
 					});
-				});
+				}
 			}
 		});
 	};
@@ -123,7 +167,7 @@ function App() {
 			return chapter;
 		});
 		Swal.fire({
-			title: `Вы уверены что хотите удалить задачу\n"${ lessonName }"?`,
+			title: `Вы уверены что хотите удалить задачу\n'${ lessonName }'?`,
 			icon: 'question',
 			confirmButtonColor: '#42B883',
 			cancelButtonColor: '#C9D1D3',
