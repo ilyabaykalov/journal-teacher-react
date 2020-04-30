@@ -10,8 +10,8 @@
     {
       "chapterId": 1,
       "title": "Переменные",
-      "homework": "Нет заданияав",
-      "completed": true,
+      "homework": "none",
+      "completed": false,
       "id": 1,
       "lessonMark": "none",
       "homeworkMark": "none"
