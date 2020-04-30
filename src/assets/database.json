@@ -10,16 +10,16 @@
     {
       "chapterId": 1,
       "title": "Переменные",
-      "homework": "Нет задания",
+      "homework": "none",
       "completed": true,
       "id": 1,
-      "lessonMark": "none",
+      "lessonMark": "4",
       "homeworkMark": "none"
     },
     {
       "chapterId": 1,
       "title": "Типы данных",
-      "homework": "Нет задания",
+      "homework": "none",
       "completed": false,
       "id": 2,
       "lessonMark": "none",
@@ -28,7 +28,7 @@
     {
       "chapterId": 1,
       "title": "Преобразование типов",
-      "homework": "Нет задания",
+      "homework": "none",
       "completed": false,
       "id": 3,
       "lessonMark": "none",
@@ -37,7 +37,7 @@
     {
       "chapterId": 1,
       "title": "Операторы",
-      "homework": "Нет задания",
+      "homework": "none",
       "completed": false,
       "id": 4,
       "lessonMark": "none",
@@ -46,7 +46,7 @@
     {
       "chapterId": 1,
       "title": "Операторы сравнения",
-      "homework": "Нет задания",
+      "homework": "none",
       "completed": false,
       "id": 5,
       "lessonMark": "none",
@@ -55,7 +55,7 @@
     {
       "chapterId": 1,
       "title": "Взаимодействие: alert, prompt, confirm",
-      "homework": "Нет задания",
+      "homework": "none",
       "completed": false,
       "id": 6,
       "lessonMark": "none",
@@ -64,7 +64,7 @@
     {
       "chapterId": 1,
       "title": "Условные операторы: if,",
-      "homework": "Нет задания",
+      "homework": "none",
       "completed": false,
       "id": 7,
       "lessonMark": "none",
@@ -73,7 +73,7 @@
     {
       "chapterId": 1,
       "title": "Логические операторы",
-      "homework": "Нет задания",
+      "homework": "none",
       "completed": false,
       "id": 8,
       "lessonMark": "none",
@@ -82,7 +82,7 @@
     {
       "chapterId": 1,
       "title": "Циклы while и for",
-      "homework": "Нет задания",
+      "homework": "none",
       "completed": false,
       "id": 9,
       "lessonMark": "none",
@@ -91,7 +91,7 @@
     {
       "chapterId": 1,
       "title": "Конструкция \"switch\"",
-      "homework": "Нет задания",
+      "homework": "none",
       "completed": false,
       "id": 10,
       "lessonMark": "none",
@@ -100,7 +100,7 @@
     {
       "chapterId": 1,
       "title": "Функции",
-      "homework": "Нет задания",
+      "homework": "none",
       "completed": false,
       "id": 11,
       "lessonMark": "none",
@@ -109,7 +109,7 @@
     {
       "chapterId": 1,
       "title": "Функции-стрелки, основы",
-      "homework": "Нет задания",
+      "homework": "none",
       "completed": false,
       "id": 12,
       "lessonMark": "none",
@@ -118,7 +118,7 @@
     {
       "chapterId": 1,
       "title": "Особенности JavaScript",
-      "homework": "Нет задания",
+      "homework": "none",
       "completed": false,
       "id": 13,
       "lessonMark": "none",

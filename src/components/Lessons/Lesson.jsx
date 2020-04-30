@@ -25,20 +25,24 @@ const Lesson = ({ id, title, homework, lessonMark, homeworkMark, completed, chap
 					       checked={ completed }
 					       onChange={ onChangeCheckbox }/>
 					<label className={ lessonCheckClassNames } htmlFor={ `lesson-${ id }` }>
-						<FontAwesomeIcon className='lessons__items-row__complete-button'
-						                 icon='check'/>
+						{ lessonMark === 'none' && <FontAwesomeIcon className='lessons__items-row__complete-button'
+						                                            icon='question'/> }
+						{ lessonMark >= 4 && <FontAwesomeIcon className='lessons__items-row__complete-button'
+						                                      icon='check'/> }
+						{ lessonMark <= 3 && <FontAwesomeIcon className='lessons__items-row__complete-button'
+						                                      icon='times'/> }
 					</label>
 				</div>
 				<p className={ titleClassNames }>{ title }
 					{
-						homework !== 'Нет задания' &&
+						homework !== 'none' &&
 						<FontAwesomeIcon className={ homeworkIconClassNames } icon='book'/>
 					}
 				</p>
 			</div>
 			<div className='mark'>
 				<p>{ !lessonMark || lessonMark === 'none' ? 'Нет оценки за урок' : `Оценка за урок: ${ lessonMark }` }</p>
-				{ homework !== 'Нет задания' &&
+				{ homework !== 'none' &&
 				<p>{ (!homeworkMark || homeworkMark === 'none') ? 'Нет оценки за д/з' : `Оценка за д/з: ${ homeworkMark }` }</p> }
 			</div>
 			<div className='lessons__items-row-actions'>

@@ -69,8 +69,8 @@ function App() {
 			html:
 				`<label for='lessonTitle'>Название урока</label>
 					<input id='lessonTitle' class='swal2-input' value='${ updLesson.title }'>
-				<label for='lessonText'>Домашнее задание</label>
-					<textarea id='lessonText' class='swal2-textarea'>${ updLesson.homework.length > 0 ? updLesson.homework : 'Нет задания' }</textarea>
+				<label for='homework'>Домашнее задание</label>
+					<textarea id='homework' class='swal2-textarea' oninput='"Нет задания".indexOf(this.value) ?  document.getElementsByClassName("homework")[0].classList.remove("hidden") : document.getElementsByClassName("homework")[0].classList.add("hidden")'>${ updLesson.homework === 'none' ? 'Нет задания' : updLesson.homework }</textarea>
 				<div class='mark-container'>
 					<div class='lesson'>
 						<label for='lessonMark'>Оценка за урок</label>
@@ -82,7 +82,7 @@ function App() {
 							<option value='5' ${ updLesson.lessonMark === '5' ? 'selected' : '' }>5</option>
 						</select>
 					</div>
-					<div class='homework'>
+					<div class='${ updLesson.homework === 'Нет задания' ? 'homework' : 'homework hidden' }'>
 						<label for='homeworkMark'>Оценка за домашнее задание</label>
 						<select id='homeworkMark' class='swal2-select'>
 							<option value='none' ${ updLesson.homeworkMark === 'none' ? 'selected' : '' }>Нет оценки</option>
@@ -101,9 +101,11 @@ function App() {
 			confirmButtonColor: '#42B883',
 			cancelButtonColor: '#C9D1D3',
 			preConfirm() {
+				const title = document.getElementById('lessonTitle').value;
+				const homework = document.getElementById('homework').value;
 				return {
-					title: document.getElementById('lessonTitle').value.trim(),
-					homework: document.getElementById('lessonText').value.trim(),
+					title: title === '' ? updLesson.title : title,
+					homework: homework === '' ? 'none' : homework,
 					lessonMark: document.getElementById('lessonMark').value,
 					homeworkMark: document.getElementById('homeworkMark').value
 				};
