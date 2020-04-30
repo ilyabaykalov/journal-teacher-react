@@ -105,7 +105,7 @@ function App() {
 				const homework = document.getElementById('homework').value;
 				return {
 					title: title === '' ? updLesson.title : title,
-					homework: homework === '' ? 'none' : homework,
+					homework: homework === '' || homework === 'Нет задания' ? 'none' : homework,
 					lessonMark: document.getElementById('lessonMark').value,
 					homeworkMark: document.getElementById('homeworkMark').value
 				};
