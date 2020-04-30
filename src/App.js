@@ -82,7 +82,7 @@ function App() {
 							<option value='5' ${ updLesson.lessonMark === '5' ? 'selected' : '' }>5</option>
 						</select>
 					</div>
-					<div class='${ updLesson.homework === 'Нет задания' ? 'homework' : 'homework hidden' }'>
+					<div class='${ updLesson.homework === 'none' ? 'homework hidden' : 'homework' }'>
 						<label for='homeworkMark'>Оценка за домашнее задание</label>
 						<select id='homeworkMark' class='swal2-select'>
 							<option value='none' ${ updLesson.homeworkMark === 'none' ? 'selected' : '' }>Нет оценки</option>
