@@ -162,12 +162,21 @@
       cursor: pointer;
       transition: background-color 0.15s ease-in-out,
       border-color 0.15s ease-in-out;
-
     }
 
     input:checked + label {
-      background-color: $checkbox-background-color--checked;
-      border-color: $checkbox-border-color--checked;
+      background-color: $checkbox-background-color--not-marked--checked;
+      border-color: $checkbox-border-color--not-marked--checked;
+
+      &.good{
+        background-color: $checkbox-background-color--good--checked;
+        border-color: $checkbox-border-color--good--checked;
+      }
+
+      &.bad{
+        background-color: $checkbox-background-color--bad--checked;
+        border-color: $checkbox-border-color--bad--checked;
+      }
     }
 
     &:hover {

@@ -8,6 +8,7 @@ library.add(fas);
 
 const Lesson = ({ id, title, homework, lessonMark, homeworkMark, completed, chapter, onRemove, onEdit, onComplete }) => {
 	const [titleClassNames, setTitleClassNames] = useState(completed ? 'title completed' : 'title');
+	const [lessonCheckClassNames, setLessonCheckClassNames] = useState(lessonMark === 'none' ? '' : lessonMark >= 4 ? 'good' : 'bad');
 	const [homeworkIconClassNames, setHomeworkIconClassNames] = useState(homeworkMark === 'none' ? 'homework-icon' : homeworkMark >= 4 ? 'homework-icon good' : 'homework-icon bad');
 
 	const onChangeCheckbox = e => {
@@ -23,23 +24,31 @@ const Lesson = ({ id, title, homework, lessonMark, homeworkMark, completed, chap
 					       type='checkbox'
 					       checked={ completed }
 					       onChange={ onChangeCheckbox }/>
-					<label htmlFor={ `lesson-${ id }` }>
+					<label className={ lessonCheckClassNames } htmlFor={ `lesson-${ id }` }>
 						<FontAwesomeIcon className='lessons__items-row__complete-button'
 						                 icon='check'/>
 					</label>
 				</div>
 				<p className={ titleClassNames }>{ title }
 					{
-						homework !== 'Нет задания' && <FontAwesomeIcon className={ homeworkIconClassNames } icon='book'/>
+						homework !== 'Нет задания' &&
+						<FontAwesomeIcon className={ homeworkIconClassNames } icon='book'/>
 					}
 				</p>
 			</div>
 			<div className='mark'>
 				<p>{ !lessonMark || lessonMark === 'none' ? 'Нет оценки за урок' : `Оценка за урок: ${ lessonMark }` }</p>
-				{homework !== 'Нет задания' && <p>{ (!homeworkMark || homeworkMark === 'none') ? 'Нет оценки за д/з' : `Оценка за д/з: ${ homeworkMark }` }</p>}
+				{ homework !== 'Нет задания' &&
+				<p>{ (!homeworkMark || homeworkMark === 'none') ? 'Нет оценки за д/з' : `Оценка за д/з: ${ homeworkMark }` }</p> }
 			</div>
 			<div className='lessons__items-row-actions'>
-				<div onClick={ () => onEdit(chapter.id, { id, title, homework, lessonMark, homeworkMark }, setHomeworkIconClassNames) }>
+				<div onClick={ () => onEdit(chapter.id, {
+					id,
+					title,
+					homework,
+					lessonMark,
+					homeworkMark
+				}, setHomeworkIconClassNames, setLessonCheckClassNames) }>
 					<FontAwesomeIcon className={ 'lessons__items-row-actions__edit-button' }
 					                 icon={ 'pen' }/>
 				</div>
