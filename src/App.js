@@ -80,7 +80,7 @@ function App() {
 				`<label for='lessonTitle'>Название урока</label>
 					<input id='lessonTitle' class='swal2-input' value='${ updLesson.title }'>
 				<label for='homework'>Домашнее задание</label>
-					<textarea id='homework' class='swal2-textarea' oninput='"Нет задания".indexOf(this.value) ?  document.getElementsByClassName("homework")[0].classList.remove("hidden") : document.getElementsByClassName("homework")[0].classList.add("hidden")' placeholder='${ !updLesson.homework ? 'Нет задания' : '' }'>${ !updLesson.homework ? '' : updLesson.homework }</textarea>
+					<textarea id='homework' class='swal2-textarea' oninput='this.value ?  document.getElementsByClassName("homework")[0].classList.remove("hidden") : document.getElementsByClassName("homework")[0].classList.add("hidden")' placeholder='Нет задания'>${ !updLesson.homework ? '' : updLesson.homework }</textarea>
 				<div class='mark-container'>
 					<div class='lesson'>
 						<label for='lessonMark'>Оценка за урок</label>
