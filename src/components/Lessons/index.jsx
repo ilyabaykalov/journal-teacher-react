@@ -31,10 +31,10 @@ const Lessons = ({ chapter, onEditTitle, onAddLesson, onRemoveLesson, onEditLess
 			}
 		}).then(({ value }) => {
 			if (value) {
-				onEditTitle(chapter.id, value);
 				axios.patch(`http://${ host.ip }:${ host.port }/chapters/${ chapter.id }`, {
 					name: value
 				}).then(() => {
+					onEditTitle(chapter.id, value);
 					console.debug(`Заголовок текущей главы изменён на ${ value }`);
 				}).catch(error => {
 					Swal.fire({

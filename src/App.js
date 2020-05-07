@@ -52,6 +52,16 @@ function App() {
 		updateChapters(newChapter);
 	};
 
+	const onEditChapterTitle = (id, title) => {
+		const newChapter = chapters.map(item => {
+			if (item.id === id) {
+				item.name = title;
+			}
+			return item;
+		});
+		updateChapters(newChapter);
+	};
+
 	/* lesson events */
 	const onAddLesson = (chapterId, newLesson) => {
 		const newChapter = chapters.map(item => {
@@ -219,16 +229,6 @@ function App() {
 			console.error(`Ошибка: ${ error }`);
 			alert('Не удалось обновить задачу');
 		});
-	};
-
-	const onEditChapterTitle = (id, title) => {
-		const newChapter = chapters.map(item => {
-			if (item.id === id) {
-				item.name = title;
-			}
-			return item;
-		});
-		updateChapters(newChapter);
 	};
 
 	return (
