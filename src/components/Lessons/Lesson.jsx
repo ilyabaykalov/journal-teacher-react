@@ -7,13 +7,11 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 library.add(fas);
 
 const Lesson = ({ id, title, homework, lessonMark, homeworkMark, completed, chapter, onRemove, onEdit, onComplete }) => {
-	const [titleClassNames, setTitleClassNames] = useState(completed ? 'title completed' : 'title');
 	const [lessonCheckClassNames, setLessonCheckClassNames] = useState(!lessonMark ? '' : lessonMark >= 4 ? 'good' : 'bad');
 	const [homeworkIconClassNames, setHomeworkIconClassNames] = useState(!homeworkMark ? 'homework-icon' : homeworkMark >= 4 ? 'homework-icon good' : 'homework-icon bad');
 
 	const onChangeCheckbox = e => {
 		onComplete(chapter.id, id, e.target.checked);
-		setTitleClassNames(e.target.checked ? 'title completed' : 'title');
 	};
 
 	return (
@@ -35,11 +33,9 @@ const Lesson = ({ id, title, homework, lessonMark, homeworkMark, completed, chap
 						                 icon='times'/> }
 					</label>
 				</div>
-				<p className={ titleClassNames }>{ title }
-					{
-						homework &&
-						<FontAwesomeIcon className={ homeworkIconClassNames } icon='book'/>
-					}
+				<p className='title'>{ title }
+					{ homework &&
+					<FontAwesomeIcon className={ homeworkIconClassNames } icon='book'/> }
 				</p>
 			</div>
 			<div className='mark'>
@@ -51,6 +47,7 @@ const Lesson = ({ id, title, homework, lessonMark, homeworkMark, completed, chap
 					id,
 					title,
 					homework,
+					completed,
 					lessonMark,
 					homeworkMark
 				}, setHomeworkIconClassNames, setLessonCheckClassNames) }>
