@@ -86,20 +86,20 @@ function App() {
 						<label for='lessonMark'>Оценка за урок</label>
 						<select id='lessonMark' class='swal2-select'>
 							<option value='none' ${ updLesson.lessonMark ? 'selected' : '' }>Нет оценки</option>
-							<option value='2' ${ updLesson.lessonMark === '2' ? 'selected' : '' }>2</option>
-							<option value='3' ${ updLesson.lessonMark === '3' ? 'selected' : '' }>3</option>
-							<option value='4' ${ updLesson.lessonMark === '4' ? 'selected' : '' }>4</option>
-							<option value='5' ${ updLesson.lessonMark === '5' ? 'selected' : '' }>5</option>
+							<option value='2' ${ updLesson.lessonMark === 2 ? 'selected' : '' }>2</option>
+							<option value='3' ${ updLesson.lessonMark === 3 ? 'selected' : '' }>3</option>
+							<option value='4' ${ updLesson.lessonMark === 4 ? 'selected' : '' }>4</option>
+							<option value='5' ${ updLesson.lessonMark === 5 ? 'selected' : '' }>5</option>
 						</select>
 					</div>
 					<div class='${ !updLesson.homework ? 'homework hidden' : 'homework' }'>
 						<label for='homeworkMark'>Оценка за домашнее задание</label>
 						<select id='homeworkMark' class='swal2-select'>
 							<option value='none' ${ updLesson.homeworkMark ? 'selected' : '' }>Нет оценки</option>
-							<option value='2' ${ updLesson.homeworkMark === '2' ? 'selected' : '' }>2</option>
-							<option value='3' ${ updLesson.homeworkMark === '3' ? 'selected' : '' }>3</option>
-							<option value='4' ${ updLesson.homeworkMark === '4' ? 'selected' : '' }>4</option>
-							<option value='5' ${ updLesson.homeworkMark === '5' ? 'selected' : '' }>5</option>
+							<option value='2' ${ updLesson.homeworkMark === 2 ? 'selected' : '' }>2</option>
+							<option value='3' ${ updLesson.homeworkMark === 3 ? 'selected' : '' }>3</option>
+							<option value='4' ${ updLesson.homeworkMark === 4 ? 'selected' : '' }>4</option>
+							<option value='5' ${ updLesson.homeworkMark === 5 ? 'selected' : '' }>5</option>
 						</select>
 					</div>
 				</div>`,
@@ -110,29 +110,31 @@ function App() {
 			cancelButtonText: 'Отмена',
 			confirmButtonColor: '#42B883',
 			cancelButtonColor: '#C9D1D3',
-			preConfirm() {
+			preConfirm: function () {
 				const title = document.getElementById('lessonTitle').value;
 				const homework = document.getElementById('homework').value;
+				const lessonMark = +document.getElementById('lessonMark').value;
+				const homeworkMark = +document.getElementById('homeworkMark').value;
 				return {
 					title: title === '' ? updLesson.title : title,
-					homework: homework === '' || homework === 'Нет задания' ? 'none' : homework,
-					lessonMark: document.getElementById('lessonMark').value,
-					homeworkMark: document.getElementById('homeworkMark').value
+					homework: homework === '' ? null : homework,
+					completed: updLesson.completed,
+					lessonMark: !isNaN(lessonMark) ? lessonMark : null,
+					homeworkMark: !isNaN(homeworkMark) ? homeworkMark : null
 				};
 			}
 		}).then(({ value, dismiss }) => {
 			if (value) {
-				if (value.title && value.homework) {
+				if (value.title) {
 					return [chapters.map(chapter => {
 						if (chapter.id === chapterId) {
 							chapter.lessons = chapter.lessons.map(lesson => {
 								if (lesson.id === updLesson.id) {
 									lesson.title = value.title;
 									lesson.homework = value.homework;
+									lesson.completed = value.completed;
 									lesson.lessonMark = value.lessonMark;
-									lesson.homeworkMark = value.homeworkMark;
-									setHomeworkIconColor(value.homeworkMark ? 'homework-icon' : value.homeworkMark >= 4 ? 'homework-icon good' : 'homework-icon bad');
-									setLessonCheckClassNames(value.lessonMark ? 'lessons__items-row__complete-button' : value.lessonMark >= 4 ? 'lessons__items-row__complete-button good' : 'lessons__items-row__complete-button bad');
+									lesson.homeworkMark = value.homework ? value.homeworkMark : null;
 								}
 								return lesson;
 							});
@@ -141,15 +143,19 @@ function App() {
 					}), value];
 				}
 			} else return [null, dismiss];
-		}).then(([chapter, value]) => {
-			if (chapter && value) {
-				if (value.title && value.homework) {
-					updateChapters(chapter);
+		}).then(([newChapters, value]) => {
+			if (newChapters && value) {
+				if (value.title) {
 					axios.patch(`http://${ host.ip }:${ host.port }/lessons/${ updLesson.id }`, {
 						title: value.title,
 						homework: value.homework,
+						completed: value.completed,
 						lessonMark: value.lessonMark,
 						homeworkMark: value.homeworkMark
+					}).then(() => {
+						updateChapters(newChapters);
+						setLessonCheckClassNames(!value.lessonMark ? '' : value.lessonMark >= 4 ? 'good' : 'bad');
+						setHomeworkIconColor(!value.homeworkMark ? 'homework-icon' : value.homeworkMark >= 4 ? 'homework-icon good' : 'homework-icon bad');
 					}).catch(error => {
 						Swal.fire({
 							icon: 'error',
@@ -210,20 +216,28 @@ function App() {
 	};
 
 	const onCompleteLesson = (chapterId, lessonId, completed) => {
+		let newLesson = {};
 		const newChapter = chapters.map(chapter => {
 			if (chapter.id === chapterId) {
 				chapter.lessons = chapter.lessons.map(lesson => {
 					if (lesson.id === lessonId) {
 						lesson.completed = completed;
+						newLesson = lesson;
 					}
 					return lesson;
 				});
 			}
 			return chapter;
 		});
-		updateChapters(newChapter);
+
 		axios.patch(`http://${ host.ip }:${ host.port }/lessons/${ lessonId }`, {
-			completed
+			title: newLesson.title,
+			homework: newLesson.homework,
+			completed: newLesson.completed,
+			lessonMark: newLesson.lessonMark,
+			homeworkMark: newLesson.homeworkMark
+		}).then(() => {
+			updateChapters(newChapter);
 		}).catch(error => {
 			console.error('Не удалось обновить задачу');
 			console.error(`Ошибка: ${ error }`);
