@@ -18,7 +18,7 @@ function App() {
 	let history = useHistory();
 
 	useEffect(() => {
-		axios.get(`http://${ host.ip }:${ host.port }/chapters?_expand=color&_embed=lessons`).then(({ data }) => {
+		axios.get(`http://${ host.ip }:${ host.port }/chapters`).then(({ data }) => {
 			updateChapters(data);
 		}).then(() => {
 			console.debug(`Главы успешно получены с сервера`);
@@ -70,22 +70,22 @@ function App() {
 				`<label for='lessonTitle'>Название урока</label>
 					<input id='lessonTitle' class='swal2-input' value='${ updLesson.title }'>
 				<label for='homework'>Домашнее задание</label>
-					<textarea id='homework' class='swal2-textarea' oninput='"Нет задания".indexOf(this.value) ?  document.getElementsByClassName("homework")[0].classList.remove("hidden") : document.getElementsByClassName("homework")[0].classList.add("hidden")'>${ updLesson.homework === 'none' ? 'Нет задания' : updLesson.homework }</textarea>
+					<textarea id='homework' class='swal2-textarea' oninput='"Нет задания".indexOf(this.value) ?  document.getElementsByClassName("homework")[0].classList.remove("hidden") : document.getElementsByClassName("homework")[0].classList.add("hidden")' placeholder='${ !updLesson.homework ? 'Нет задания' : '' }'>${ !updLesson.homework ? '' : updLesson.homework }</textarea>
 				<div class='mark-container'>
 					<div class='lesson'>
 						<label for='lessonMark'>Оценка за урок</label>
 						<select id='lessonMark' class='swal2-select'>
-							<option value='none' ${ updLesson.lessonMark === 'none' ? 'selected' : '' }>Нет оценки</option>
+							<option value='none' ${ updLesson.lessonMark ? 'selected' : '' }>Нет оценки</option>
 							<option value='2' ${ updLesson.lessonMark === '2' ? 'selected' : '' }>2</option>
 							<option value='3' ${ updLesson.lessonMark === '3' ? 'selected' : '' }>3</option>
 							<option value='4' ${ updLesson.lessonMark === '4' ? 'selected' : '' }>4</option>
 							<option value='5' ${ updLesson.lessonMark === '5' ? 'selected' : '' }>5</option>
 						</select>
 					</div>
-					<div class='${ updLesson.homework === 'none' ? 'homework hidden' : 'homework' }'>
+					<div class='${ !updLesson.homework ? 'homework hidden' : 'homework' }'>
 						<label for='homeworkMark'>Оценка за домашнее задание</label>
 						<select id='homeworkMark' class='swal2-select'>
-							<option value='none' ${ updLesson.homeworkMark === 'none' ? 'selected' : '' }>Нет оценки</option>
+							<option value='none' ${ updLesson.homeworkMark ? 'selected' : '' }>Нет оценки</option>
 							<option value='2' ${ updLesson.homeworkMark === '2' ? 'selected' : '' }>2</option>
 							<option value='3' ${ updLesson.homeworkMark === '3' ? 'selected' : '' }>3</option>
 							<option value='4' ${ updLesson.homeworkMark === '4' ? 'selected' : '' }>4</option>
@@ -121,8 +121,8 @@ function App() {
 									lesson.homework = value.homework;
 									lesson.lessonMark = value.lessonMark;
 									lesson.homeworkMark = value.homeworkMark;
-									setHomeworkIconColor(value.homeworkMark === 'none' ? 'homework-icon' : value.homeworkMark >= 4 ? 'homework-icon good' : 'homework-icon bad');
-									setLessonCheckClassNames(value.lessonMark === 'none' ? 'lessons__items-row__complete-button' : value.lessonMark >= 4 ? 'lessons__items-row__complete-button good' : 'lessons__items-row__complete-button bad');
+									setHomeworkIconColor(value.homeworkMark ? 'homework-icon' : value.homeworkMark >= 4 ? 'homework-icon good' : 'homework-icon bad');
+									setLessonCheckClassNames(value.lessonMark ? 'lessons__items-row__complete-button' : value.lessonMark >= 4 ? 'lessons__items-row__complete-button good' : 'lessons__items-row__complete-button bad');
 								}
 								return lesson;
 							});
