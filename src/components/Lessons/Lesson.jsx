@@ -8,8 +8,8 @@ library.add(fas);
 
 const Lesson = ({ id, title, homework, lessonMark, homeworkMark, completed, chapter, onRemove, onEdit, onComplete }) => {
 	const [titleClassNames, setTitleClassNames] = useState(completed ? 'title completed' : 'title');
-	const [lessonCheckClassNames, setLessonCheckClassNames] = useState(lessonMark === 'none' ? '' : lessonMark >= 4 ? 'good' : 'bad');
-	const [homeworkIconClassNames, setHomeworkIconClassNames] = useState(homeworkMark === 'none' ? 'homework-icon' : homeworkMark >= 4 ? 'homework-icon good' : 'homework-icon bad');
+	const [lessonCheckClassNames, setLessonCheckClassNames] = useState(!lessonMark ? '' : lessonMark >= 4 ? 'good' : 'bad');
+	const [homeworkIconClassNames, setHomeworkIconClassNames] = useState(!homeworkMark ? 'homework-icon' : homeworkMark >= 4 ? 'homework-icon good' : 'homework-icon bad');
 
 	const onChangeCheckbox = e => {
 		onComplete(chapter.id, id, e.target.checked);
@@ -25,25 +25,26 @@ const Lesson = ({ id, title, homework, lessonMark, homeworkMark, completed, chap
 					       checked={ completed }
 					       onChange={ onChangeCheckbox }/>
 					<label className={ lessonCheckClassNames } htmlFor={ `lesson-${ id }` }>
-						{ lessonMark === 'none' && <FontAwesomeIcon className='lessons__items-row__complete-button'
-						                                            icon='question'/> }
-						{ lessonMark >= 4 && <FontAwesomeIcon className='lessons__items-row__complete-button'
-						                                      icon='check'/> }
-						{ lessonMark <= 3 && <FontAwesomeIcon className='lessons__items-row__complete-button'
-						                                      icon='times'/> }
+						{ !lessonMark && <FontAwesomeIcon className='lessons__items-row__complete-button'
+						                                  icon='question'/> }
+						{ lessonMark && lessonMark >= 4 &&
+						<FontAwesomeIcon className='lessons__items-row__complete-button'
+						                 icon='check'/> }
+						{ lessonMark && lessonMark <= 3 &&
+						<FontAwesomeIcon className='lessons__items-row__complete-button'
+						                 icon='times'/> }
 					</label>
 				</div>
 				<p className={ titleClassNames }>{ title }
 					{
-						homework !== 'none' &&
+						homework &&
 						<FontAwesomeIcon className={ homeworkIconClassNames } icon='book'/>
 					}
 				</p>
 			</div>
 			<div className='mark'>
-				<p>{ !lessonMark || lessonMark === 'none' ? 'Нет оценки за урок' : `Оценка за урок: ${ lessonMark }` }</p>
-				{ homework !== 'none' &&
-				<p>{ (!homeworkMark || homeworkMark === 'none') ? 'Нет оценки за д/з' : `Оценка за д/з: ${ homeworkMark }` }</p> }
+				<p>{ !lessonMark ? 'Нет оценки за урок' : `Оценка за урок: ${ lessonMark }` }</p>
+				<p>{ !homeworkMark ? 'Нет оценки за д/з' : `Оценка за д/з: ${ homeworkMark }` }</p>
 			</div>
 			<div className='lessons__items-row-actions'>
 				<div onClick={ () => onEdit(chapter.id, {
