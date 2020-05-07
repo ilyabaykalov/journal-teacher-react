@@ -1,4 +1,4 @@
-export { default as AddChapterButton } from './AddСhapterButton';
+export { default as AddChapterButton } from './AddChapterButton';
 export { default as Badge } from './Badge';
 export { default as Chapter } from './Сhapter';
 export { default as Lessons } from './Lessons';

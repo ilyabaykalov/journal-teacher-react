@@ -7,7 +7,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 
 import { Badge, Chapter, host } from '../../components';
 
-import './AddСhapterButton.scss';
+import './AddChapterButton.scss';
 
 library.add(fas);
 
