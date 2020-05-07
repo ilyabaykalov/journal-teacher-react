@@ -22,9 +22,7 @@ const AddLessonForm = ({ chapter, onAddLesson }) => {
 	const addLesson = () => {
 		const newLesson = {
 			chapterId: chapter.id,
-			title: inputValue.capitalize(),
-			homework: 'none',
-			completed: false
+			title: inputValue.capitalize()
 		};
 		setIsLoading(true);
 		axios.post(`http://${ host.ip }:${ host.port }/lessons`, newLesson).then(({ data }) => {
